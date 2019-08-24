@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './transaction.dart';
+import 'package:personal_expenses/widgets/user_transaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,23 +14,19 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-      title: 'New Shoes',
-      amount: 70,
-      id: 't1',
-      date: DateTime.now(),
-    ),
-  ];
+  // String titleInput;
+  // String amountInput;
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Flutter App'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+      appBar: AppBar(
+        title: Text('Flutter App'),
+      ),
+      body: SingleChildScrollView(
+              child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
@@ -41,11 +37,10 @@ class MyHomePage extends StatelessWidget {
                 elevation: 5,
               ),
             ),
-            Card(
-              color: Colors.red,
-              child: Text('List of TX'),
-            )
+            UserTransaction()
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
