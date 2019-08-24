@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expenses/widgets/user_transaction.dart';
 import '../widgets/new_transaction.dart';
 import '../widgets/transaction_list.dart';
 
@@ -9,6 +8,20 @@ class NewTransaction extends StatelessWidget {
   final amtCont = TextEditingController();
 
   NewTransaction(this.addTx);
+
+  void submitData() {
+    final enteredTitle = titleCont.text;
+    final enteredAmount = double.parse(amtCont.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+    return;
+  }
+    addTx(
+        titleCont.text,
+        double.parse(amtCont.text),
+      );
+    }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,6 +34,7 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
               controller: titleCont,
+              onSubmitted: (_) => submitData(),
               // onChanged: (val) {
               //   titleInput = val;
               // },
@@ -28,19 +42,14 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amtCont,
-              // onChanged: (val) =>
-              //   amountInput = val,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitData(),
             ),
             FlatButton(
               child: Text('Add Transcation'),
               textColor: Colors.purple,
-              onPressed: () {
-                addTx(
-                  titleCont.text,
-                  double.parse(amtCont.text),
-                );
-              },
-            )
+              onPressed:submitData,
+            ),
           ],
         ),
       ),
