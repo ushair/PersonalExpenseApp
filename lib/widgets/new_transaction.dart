@@ -1,26 +1,34 @@
 import 'package:flutter/material.dart';
-import '../widgets/new_transaction.dart';
-import '../widgets/transaction_list.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   final Function addTx;
-  final titleCont = TextEditingController();
-  final amtCont = TextEditingController();
 
   NewTransaction(this.addTx);
+
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleCont = TextEditingController();
+
+  final amtCont = TextEditingController();
 
   void submitData() {
     final enteredTitle = titleCont.text;
     final enteredAmount = double.parse(amtCont.text);
 
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
-    return;
-  }
-    addTx(
-        titleCont.text,
-        double.parse(amtCont.text),
-      );
+      return;
     }
+
+    widget.addTx(
+      titleCont.text,
+      double.parse(amtCont.text),
+    );
+
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +56,7 @@ class NewTransaction extends StatelessWidget {
             FlatButton(
               child: Text('Add Transcation'),
               textColor: Colors.purple,
-              onPressed:submitData,
+              onPressed: submitData,
             ),
           ],
         ),
