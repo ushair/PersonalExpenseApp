@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 GestureDetector(
                   child: Icon(CupertinoIcons.add),
                   onTap: () => _startAddNewTransaction(context),
-                ) 
+                )
               ],
             ),
           )
@@ -145,52 +145,57 @@ class _MyHomePageState extends State<MyHomePage> {
       child: TransactionList(_userTransactions, _deleteTransaction),
     );
 
-    final pageBody = SingleChildScrollView(
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          if (isLandscape)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('Show Chart'),
-                Switch.adaptive(
-                  activeColor: Theme.of(context).accentColor,
-                  value: _showChart,
-                  onChanged: (val) {
-                    setState(() {
-                      _showChart = val;
-                    });
-                  },
-                )
-              ],
-            ),
-          if (!isLandscape)
-            Container(
-                height: (mediaQuery.size.height -
-                        appBar.preferredSize.height -
-                        mediaQuery.padding.top) *
-                    0.3,
-                child: Chart(_recentTransactions)),
-          if (!isLandscape) txListWideget,
-          if (isLandscape)
-            _showChart
-                ? Container(
-                    height: (mediaQuery.size.height -
-                            appBar.preferredSize.height -
-                            mediaQuery.padding.top) *
-                        0.7,
-                    child: Chart(_recentTransactions))
-                : txListWideget,
-        ],
+    final pageBody = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Show Chart',
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                  Switch.adaptive(
+                    activeColor: Theme.of(context).accentColor,
+                    value: _showChart,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    },
+                  )
+                ],
+              ),
+            if (!isLandscape)
+              Container(
+                  height: (mediaQuery.size.height -
+                          appBar.preferredSize.height -
+                          mediaQuery.padding.top) *
+                      0.3,
+                  child: Chart(_recentTransactions)),
+            if (!isLandscape) txListWideget,
+            if (isLandscape)
+              _showChart
+                  ? Container(
+                      height: (mediaQuery.size.height -
+                              appBar.preferredSize.height -
+                              mediaQuery.padding.top) *
+                          0.7,
+                      child: Chart(_recentTransactions))
+                  : txListWideget,
+          ],
+        ),
       ),
     );
 
     return Platform.isIOS
         ? CupertinoPageScaffold(
             child: pageBody,
-            navigationBar : appBar,
+            navigationBar: appBar,
           )
         : Scaffold(
             appBar: appBar,
